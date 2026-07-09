@@ -5,6 +5,7 @@ const cors = require("cors");
 const authRoutes = require("./routes/authRoutes");
 const destinationRoutes = require("./routes/destinationRoutes");
 const lessonRoutes = require("./routes/lessonRoutes");  
+const tripRoutes = require("./routes/tripRoutes");
 
 const app = express();
 
@@ -47,5 +48,8 @@ app.use("/api", require("./routes/api"));
 
 // Lesson Routes
 app.use("/api/lessons", lessonRoutes);
+
+// Trip Routes
+app.use("/api/trips", tripRoutes);
 
 module.exports = app;
