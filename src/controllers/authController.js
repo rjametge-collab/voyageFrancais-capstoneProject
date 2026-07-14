@@ -8,6 +8,9 @@ const formatUserResponse = (user) => ({
   name: `${user.firstName} ${user.lastName}`.trim(),
   email: user.email,
   languageLevel: user.languageLevel,
+
+  completedLessons: user.completedLessons?.length || 0,
+  savedTrips: user.savedTrips?.length || 0,
 });
 
 
