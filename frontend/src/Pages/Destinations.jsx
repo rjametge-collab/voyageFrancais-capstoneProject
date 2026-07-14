@@ -1,5 +1,6 @@
 import { useEffect, useState } from "react";
 import api from "../api";
+import DestinationCard from "../components/DestinationCard";
 
 function Destinations() {
   const [destinations, setDestinations] = useState([]);
@@ -11,52 +12,28 @@ function Destinations() {
   async function fetchDestinations() {
     try {
       const response = await api.get("/destinations");
-      setDestinations(response.data);
+      setDestinations(Array.isArray(response.data) ? response.data : []);
     } catch (error) {
-      console.error("Error loading destinations:", error);
+      console.error("Failed to load destinations:", error);
+      setDestinations([]);
     }
   }
 
   return (
-    <div className="p-8">
-
-      <h1 className="text-4xl font-bold mb-6">
-        🌍 Destinations
+    <div className="max-w-6xl mx-auto px-6 py-16">
+      <h1 className="text-4xl font-bold text-center text-blue-900 mb-12">
+        Explore France
       </h1>
 
       {destinations.length === 0 ? (
-        <p>No destinations found.</p>
+        <p className="text-center text-gray-600">No destinations available.</p>
       ) : (
-
-        <div className="space-y-4">
-
+        <div className="grid md:grid-cols-3 gap-8">
           {destinations.map((destination) => (
-
-            <div
-              key={destination._id}
-              className="border rounded-lg p-6 shadow"
-            >
-
-              <h2 className="text-2xl font-bold">
-                {destination.city}
-              </h2>
-
-              <p className="text-gray-600">
-                {destination.region}, {destination.country}
-              </p>
-
-              <p className="mt-3">
-                {destination.description}
-              </p>
-
-            </div>
-
+            <DestinationCard key={destination._id} destination={destination} />
           ))}
-
         </div>
-
       )}
-
     </div>
   );
 }
